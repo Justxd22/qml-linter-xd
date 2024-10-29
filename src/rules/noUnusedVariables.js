@@ -9,13 +9,13 @@ const meta = {
 function create(context) {
     return {
         validate: (ast) => {
-            const declaredVars = new Map(); // Map to store variable and its node
+            const declaredVars = new Set();
             const usedVars = new Set();
 
             // Find all property declarations
             traverseAST(ast, node => {
                 if (node.type === 'Property') {
-                    declaredVars.set(node.name, node);
+                    declaredVars.add(node.name);
                 }
             });
 
@@ -23,18 +23,18 @@ function create(context) {
             traverseAST(ast, node => {
                 if (node.type === 'MemberExpression') {
                     const name = node.property?.name;
-                    if (name && declaredVars.has(name)) {
+                    if (name) {
                         usedVars.add(name);
                     }
                 }
             });
 
             // Report unused variables
-            declaredVars.forEach((node, varName) => {
+            declaredVars.forEach(varName => {
                 if (!usedVars.has(varName)) {
                     context.report({
                         message: `Unused variable: ${varName}`,
-                        node
+                        node: { name: varName }
                     });
                 }
             });

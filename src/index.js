@@ -78,14 +78,14 @@ class QMLLinter {
     const allIssues = [];
     
     files.forEach(file => {
-      const content = fs.readFileSync(file, 'utf8');
-      console.log(`[FILE]\n\n\n${file}`)
-      const issues = this.lint(content, file);
-      console.log(`[ISSSUEEEE]\n\n\n${issues}`)
-
-      allIssues.push(...issues);
+        try {
+            const content = fs.readFileSync(file, 'utf8');
+            const issues = this.lint(content, file);
+            allIssues.push(...issues);
+        } catch (error) {
+            console.error(`Failed to read file ${file}: ${error.message}`);
+        }
     });
-    
     return allIssues;
   }
 }

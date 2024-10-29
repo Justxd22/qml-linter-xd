@@ -13,21 +13,15 @@ function traverseAST(node, callback) {
   
   callback(node);
   
-  // Handle different node types based on @oltodo/qml-parser AST structure
+  // Check and traverse specific child properties based on the node type
   if (node.body && Array.isArray(node.body)) {
     node.body.forEach(child => traverseAST(child, callback));
-  }
-  
-  if (node.members && Array.isArray(node.members)) {
+  } else if (node.members && Array.isArray(node.members)) {
     node.members.forEach(child => traverseAST(child, callback));
-  }
-
-  if (node.object) {
-    traverseAST(node.object, callback);
-  }
-
-  if (node.properties && Array.isArray(node.properties)) {
+  } else if (node.properties && Array.isArray(node.properties)) {
     node.properties.forEach(child => traverseAST(child, callback));
+  } else if (node.object) {
+    traverseAST(node.object, callback);
   }
 }
 
