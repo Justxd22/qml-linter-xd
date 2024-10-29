@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "noUnusedVariables": {
+      "enabled": true
+    },
+    "consistentEquality": {
+      "enabled": true,
+      "config": "strict"
+    },
+    "consistentSemicolons": {
+      "enabled": true,
+      "config": "always"
+    },
+    "propertyOrder": {
+      "enabled": true,
+      "config": ["id", "property", "signal", "function", "Component"]
+    }
+  }
+}
