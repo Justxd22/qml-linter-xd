@@ -10,8 +10,7 @@ QML Linter is a validation tool designed to enforce coding standards and best pr
 ## Features
 
 - **Rule-Based Validation**: Check your QML code against various configurable rules.
-- **Customizable Rules**: Enable or disable specific rules as needed in your `.qmllintrc` configuration file.
-- **JavaScript Code Block Parsing**: Validates JavaScript code blocks within QML files using Esprima.
+- **JavaScript Code Block Parsing**: Validates JavaScript code blocks within QML files.
 - **Report Generation**: Detailed reporting of linting issues, including the type of issue and the affected code.
 
 ## Installation
@@ -23,67 +22,63 @@ QML Linter is a validation tool designed to enforce coding standards and best pr
    cd qml-linter
    ```
 
-2. Install the dependencies:
+You'll first need to install [ESLint](https://eslint.org/):
 
-    ```bash
-    npm install
-    ```
+```sh
+npm i eslint --save-dev
+```
 
+Next, install `eslint-plugin-qml-linter-xd`:
 
-## Configuration
-To configure the linter, create a .qmllintrc file in the root of your project. Here’s an example configuration:
-
-```json
-{
-  "rules": {
-    "noUnusedVariables": {
-      "enabled": true
-    },
-    "consistentEquality": {
-      "enabled": true,
-      "config": "strict"
-    },
-    "consistentSemicolons": {
-      "enabled": true,
-      "config": "always"
-    },
-    "propertyOrder": {
-      "enabled": true,
-      "config": ["id", "property", "signal", "function", "Component"]
-    }
-  }
-}
+```sh
+npm install eslint-plugin-qml-linter-xd --save-dev
 ```
 
 ## Usage
-You can run the linter on your QML files using the following command:
 
-```bash
-npm run lint
+In your [configuration file](https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file), import the plugin `eslint-plugin-qml-linter-xd` and add `qml-linter-xd` to the `plugins` key:
+
+```js
+import qml from "eslint-plugin-qml-linter-xd"
+
+
+export default [
+  {
+    files: ["**/*.qml"],
+    processor: qml.processors.qml,
+  },
+
+];
 ```
 
-To test the linter and see if your rules are functioning correctly, use the testing scripts:
 
-```bash
-npm run test
+Then configure js rules you want to use under the `rules` key.
+
+```js
+import qml from "eslint-plugin-qml-linter-xd"
+
+
+export default [
+  {
+    files: ["**/*.js"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+    },
+    rules: {
+      "no-unused-vars": "error", // Example: prevent unused variables
+      "no-console": "warn", // Example: warn on console statements
+    },
+  },
+
+  {
+    files: ["**/*.qml"],
+    processor: qml.processors.qml,
+  },
+
+];
 ```
 
-## File Patterns
-The linter supports glob patterns for file selection. Modify the lint command in your package.json if you want to specify a different file pattern.
-
-
-## Testing
-The project includes unit tests for the defined rules. You can run the tests with:
-
-```bash
-npm run test
-```
-
-To run tests in watch mode:
-
-```bash
-npm run test:watch
-```
 
 ## Contributing
 Contributions are welcome! Please feel free to submit a pull request or open an issue for any bugs or feature requests.
