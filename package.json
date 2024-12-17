@@ -44,15 +44,15 @@
   "peerDependencies": {
     "eslint": ">=8.57.0"
   },
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
-    "url": "justxd22/"
+    "url": "justxd22/qml-linter-xd"
   },
   "bugs": {
-    "url": "https://github.com/justxd22/issues"
+    "url": "https://github.com/justxd22/qml-linter-xd/issues"
   },
-  "homepage": "https://github.com/justxd22/",
+  "homepage": "https://github.com/justxd22/qml-linter-xd",
   "directories": {
     "lib": "lib",
     "test": "tests"

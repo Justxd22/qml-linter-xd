@@ -1,8 +1,7 @@
-import qml from "eslint-plugin-qml-linter-xd"
+import qml from "eslint-plugin-qml-linter-xd";
 
 
 export default [
-  // Base configuration
   {
     files: ["**/*.js"],
     languageOptions: {

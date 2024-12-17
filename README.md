@@ -1,8 +1,8 @@
-# QML validation
+# QML Eslint Plugin
 
 ## Overview
 
-QML Linter is a validation tool designed to enforce coding standards and best practices in QML files. The linter serves as an ESLint plugin, helping developers maintain consistent code quality through a set of predefined rules. It leverages the `@oltodo/qml-parser` library to parse QML files and provide meaningful feedback on potential issues.
+Validation tool designed to enforce coding standards and best practices in QML files. The linter serves as an ESLint plugin, helping developers maintain consistent code quality through a set of predefined rules. It leverages the `@oltodo/qml-parser` library to parse QML files as AST and `Eslint` to provide meaningful feedback on potential issues.
 
 - end goal eslint plugin for validation
 - samples from monero-gui-wallet
@@ -14,60 +14,67 @@ QML Linter is a validation tool designed to enforce coding standards and best pr
 - **Report Generation**: Detailed reporting of linting issues, including the type of issue and the affected code.
 
 ## Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone 
-   cd qml-linter
-   ```
-
-You'll first need to install [ESLint](https://eslint.org/):
+You'll first need to install [ESLint](https://eslint.org/) in your project:
 
 ```sh
 npm i eslint --save-dev
 ```
+### Use Plugin From NPM
+Install from npm
+```sh
+npm i @justxd22/eslint-plugin-qml-linter-xd
+```
+Next go to [Usage](#usage)
 
-Next, install `eslint-plugin-qml-linter-xd`:
+
+### Use PLugin From Source code
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Justxd22/qml-linter-xd
+cd qml-linter-xd
+```
+
+Next, link `eslint-plugin-qml-linter-xd`:
 
 ```sh
-npm install eslint-plugin-qml-linter-xd --save-dev
+npm link
 ```
+
+Next go to your QML project and install the link
+```sh
+cd SOME_QML_PROJECT/
+npm link eslint-plugin-qml-linter-xd
+```
+Next go to [Usage](#usage)
+
 
 ## Usage
+- Install the plugin
+- In your [configuration file](https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file), import the plugin `eslint-plugin-qml-linter-xd` and add `qml.processors.qml` as a processor
+- Then configure js rules you want to use under the `rules` key.
+- Next go to [Run](#run)
 
-In your [configuration file](https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file), import the plugin `eslint-plugin-qml-linter-xd` and add `qml-linter-xd` to the `plugins` key:
+## or use this config
+
 
 ```js
-import qml from "eslint-plugin-qml-linter-xd"
-
-
-export default [
-  {
-    files: ["**/*.qml"],
-    processor: qml.processors.qml,
-  },
-
-];
-```
-
-
-Then configure js rules you want to use under the `rules` key.
-
-```js
-import qml from "eslint-plugin-qml-linter-xd"
+import qml from "eslint-plugin-qml-linter-xd";
 
 
 export default [
   {
     files: ["**/*.js"],
     languageOptions: {
-      ecmaVersion: "latest",
+      ecmaVersion: "latest", // Modern JavaScript
       sourceType: "module",
     },
     rules: {
-      "no-unused-vars": "error", // Example: prevent unused variables
+      "no-unused-vars": "warn", // Example: prevent unused variables
       "no-console": "warn", // Example: warn on console statements
+      "semi": ["error", "always"], // Enforce semicolons
+      "eqeqeq": ["error", "always"], // Require === and !== instead of == and !=
     },
   },
 
@@ -78,117 +85,81 @@ export default [
 
 ];
 ```
+## RUN
+Lint:
+```sh
+npx eslint .
+```
+Lint & Fix:
+```sh
+npx eslint . --fix
+```
 
 ## Working sample
-Qml files from the monero-gui
+Running these rules on the whole monero-gui repo:
+- eqeqeq
+- no-unused-vars
+- no-console
+- semi
+### Before `--fix`
+![err](.res/err.png)
+### After `--fix`
+![fixed](.res/fixed.png)
+
 ```bash
-❯ npx eslint test/
+❯ npx eslint monero-gui
 
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/Account.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/AddressBook.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/Advanced.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/Keys.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/History.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/Sign.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/Mining.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/Receive.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/Transfer.qml
-Preprocessing Input: /home/xd/Documents/code/mdtest/test/TxKey.qml
+Preprocessing Input: /home/xd/Documents/code/mdtest/monero-gui/MiddlePanel.qml
+Preprocessing Input: /home/xd/Documents/code/mdtest/monero-gui/LeftPanel.qml
+Preprocessing Input: /home/xd/Documents/code/mdtest/monero-gui/components/AdvancedOptionsItem.qml
+Preprocessing Input: /home/xd/Documents/code/mdtest/monero-gui/components/CheckBox.qml
+Preprocessing Input: /home/xd/Documents/code/mdtest/monero-gui/components/CheckBox2.qml
+Preprocessing Input: /home/xd/Documents/code/mdtest/monero-gui/components/ContextMenu.qml
+Preprocessing Input: /home/xd/Documents/code/mdtest/monero-gui/components/ContextMenuItem.qml
+................................................
 
-/home/xd/Documents/code/mdtest/test/Account.qml
-   50:5   error    'accountHeight' is assigned a value but never used           no-unused-vars
-   51:5   error    'balanceAllText' is assigned a value but never used          no-unused-vars
-   52:5   error    'unlockedBalanceAllText' is assigned a value but never used  no-unused-vars
-   56:10  error    'renameSubaddressAccountLabel' is defined but never used     no-unused-vars
-  118:29  warning  Unexpected console statement                                 no-console
-  153:29  warning  Unexpected console statement                                 no-console
-  393:9   warning  Unexpected console statement                                 no-console
+................................................
+/home/xd/Documents/code/mdtest/monero-gui/wizard/WizardRestoreWallet3.qml
+  41:5  warning  'pageHeight' is assigned a value but never used    no-unused-vars
+  42:5  warning  'viewName' is assigned a value but never used      no-unused-vars
+  43:5  warning  'recoveryMode' is assigned a value but never used  no-unused-vars
 
-/home/xd/Documents/code/mdtest/test/AddressBook.qml
-   47:5   error    'addressbookHeight' is assigned a value but never used  no-unused-vars
-  456:33  warning  Unexpected console statement                            no-console
-  472:29  warning  Unexpected console statement                            no-console
-  508:10  error    'showEditAddress' is defined but never used             no-unused-vars
-  521:9   warning  Unexpected console statement                            no-console
-  547:9   warning  Unexpected console statement                            no-console
+/home/xd/Documents/code/mdtest/monero-gui/wizard/WizardRestoreWallet4.qml
+  40:5  warning  'pageHeight' is assigned a value but never used  no-unused-vars
+  42:5  warning  'viewName' is assigned a value but never used    no-unused-vars
 
-/home/xd/Documents/code/mdtest/test/History.qml
-  1450:17  error    'matched' is assigned a value but never used         no-unused-vars
-  1638:10  error    'editDescription' is defined but never used          no-unused-vars
-  1664:10  error    'removeFromCollapsedList' is defined but never used  no-unused-vars
-  1691:10  error    'showTxDetails' is defined but never used            no-unused-vars
-  1710:10  error    'showTxProof' is defined but never used              no-unused-vars
-  1710:53  error    'subaddrAccount' is defined but never used           no-unused-vars
-  1710:69  error    'subaddrIndex' is defined but never used             no-unused-vars
-  1713:13  warning  Unexpected console statement                         no-console
-  1719:13  warning  Unexpected console statement                         no-console
-  1722:9   warning  Unexpected console statement                         no-console
-  1731:9   warning  Unexpected console statement                         no-console
-  1761:13  warning  Unexpected console statement                         no-console
-  1793:19  error    'err' is defined but never used                      no-unused-vars
-  1828:10  error    'searchInHistory' is defined but never used          no-unused-vars
+/home/xd/Documents/code/mdtest/monero-gui/wizard/WizardSummary.qml
+  69:113  error  Expected '===' and instead saw '=='  eqeqeq
+  76:109  error  Expected '===' and instead saw '=='  eqeqeq
 
-/home/xd/Documents/code/mdtest/test/Keys.qml
-   43:5  error    'keysHeight' is assigned a value but never used  no-unused-vars
-  272:9  warning  Unexpected console statement                     no-console
+/home/xd/Documents/code/mdtest/monero-gui/wizard/WizardSummaryItem.qml
+  38:5  warning  'header' is assigned a value but never used  no-unused-vars
+  39:5  warning  'value' is assigned a value but never used   no-unused-vars
 
-/home/xd/Documents/code/mdtest/test/Mining.qml
-  41:5  error  'miningHeight' is assigned a value but never used       no-unused-vars
-  42:5  error  'currentHashRate' is assigned a value but never used    no-unused-vars
-  44:5  error  'stopMiningEnabled' is assigned a value but never used  no-unused-vars
+/home/xd/Documents/code/mdtest/monero-gui/wizard/WizardWalletInput.qml
+   64:10  warning  'reset' is defined but never used    no-unused-vars
+  111:29  error    Expected '!==' and instead saw '!='  eqeqeq
+  112:29  error    Expected '!==' and instead saw '!='  eqeqeq
+  119:29  error    Expected '!==' and instead saw '!='  eqeqeq
+  153:41  error    Expected '===' and instead saw '=='  eqeqeq
+  175:29  error    Expected '!==' and instead saw '!='  eqeqeq
+  176:29  error    Expected '!==' and instead saw '!='  eqeqeq
+  197:33  error    Expected '!==' and instead saw '!='  eqeqeq
+  198:33  error    Expected '!==' and instead saw '!='  eqeqeq
+  206:33  error    Expected '!==' and instead saw '!='  eqeqeq
 
-/home/xd/Documents/code/mdtest/test/Receive.qml
-   52:5   error    'receiveHeight' is assigned a value but never used  no-unused-vars
-  758:21  warning  Unexpected console statement                        no-console
-  771:9   warning  Unexpected console statement                        no-console
+✖ 627 problems (189 errors, 438 warnings)
 
-/home/xd/Documents/code/mdtest/test/Sign.qml
-   40:5   error    'signHeight' is assigned a value but never used  no-unused-vars
-  424:10  error    'clearFields' is defined but never used          no-unused-vars
-  435:9   warning  Unexpected console statement                     no-console
-
-/home/xd/Documents/code/mdtest/test/Transfer.qml
-    52:5   error    'transferHeight1' is assigned a value but never used  no-unused-vars
-    53:5   error    'transferHeight2' is assigned a value but never used  no-unused-vars
-   109:9   warning  Unexpected console statement                          no-console
-   839:19  warning  Unexpected console statement                          no-console
-   841:19  warning  Unexpected console statement                          no-console
-   883:17  warning  Unexpected console statement                          no-console
-   889:17  warning  Unexpected console statement                          no-console
-   909:17  warning  Unexpected console statement                          no-console
-   915:17  warning  Unexpected console statement                          no-console
-   939:17  warning  Unexpected console statement                          no-console
-   941:17  warning  Unexpected console statement                          no-console
-   948:17  warning  Unexpected console statement                          no-console
-   954:17  warning  Unexpected console statement                          no-console
-   981:17  warning  Unexpected console statement                          no-console
-  1001:17  warning  Unexpected console statement                          no-console
-  1011:17  warning  Unexpected console statement                          no-console
-  1028:13  warning  Unexpected console statement                          no-console
-  1055:13  warning  Unexpected console statement                          no-console
-  1065:13  warning  Unexpected console statement                          no-console
-  1073:13  warning  Unexpected console statement                          no-console
-  1083:13  warning  Unexpected console statement                          no-console
-  1091:13  warning  Unexpected console statement                          no-console
-  1101:13  warning  Unexpected console statement                          no-console
-  1109:13  warning  Unexpected console statement                          no-console
-  1120:13  warning  Unexpected console statement                          no-console
-  1128:13  warning  Unexpected console statement                          no-console
-  1141:9   warning  Unexpected console statement                          no-console
-  1187:10  error    'sendTo' is defined but never used                    no-unused-vars
-
-/home/xd/Documents/code/mdtest/test/TxKey.qml
-   41:5   error    'txkeyHeight' is assigned a value but never used  no-unused-vars
-  151:21  warning  Unexpected console statement                      no-console
-  236:21  warning  Unexpected console statement                      no-console
-  262:10  error    'clearFields' is defined but never used           no-unused-vars
-  274:9   warning  Unexpected console statement                      no-console
-
-✖ 71 problems (27 errors, 44 warnings)
 ```
+
+## Support me
+
+- xmr: `433CbZXrdTBQzESkZReqQp1TKmj7MfUBXbc8FkG1jpVTBFxY9MCk1RXPWSG6CnCbqW7eiMTEGFgbHXj3rx3PxZadPgFD3DX`
+- xmr: `4ACPJKijtYsBn1vsYdjS6sLavgvvyEVYg54adcHGYepUMFi8sUttk9obNfaRv3TCMZN5pMeHLiTTpHjAdTkLYPDr33BBRh5`
+- birdpay: `@_xd222`
+
 ## Contributing
 Contributions are welcome! Please feel free to submit a pull request or open an issue for any bugs or feature requests.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for more information.
-
+This project is licensed under the GPLv3 License. See the LICENSE file for more information.
