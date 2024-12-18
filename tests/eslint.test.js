@@ -68,7 +68,6 @@ describe('ESLint QML Plugin Integration', () => {
     
     // Lint the file
     const messages = linter.verify(fileContents, config, { filename: filePath });
-    console.log(messages, filePath);
     
     // Create a result object similar to ESLint's output
     return [{
@@ -122,7 +121,6 @@ describe('ESLint QML Plugin Integration', () => {
       it(`should produce expected errors for ${filename}`, async () => {
         const filePath = path.join(invalidDir, filename);
         const results = await runEslintOnFile(filePath);
-        console.log(results);
         // Verify total number of errors
         assert.strictEqual(results[0].errorCount + results[0].warningCount, expectedErrors.length, 
           `Unexpected number of errors in ${filename}`);
