@@ -22,7 +22,7 @@ npm i eslint --save-dev
 ### Use Plugin From NPM
 Install from npm
 ```sh
-npm i eslint-plugin-qml-linter-xd
+ npm i eslint-plugin-qml-linter-xd
 ```
 Next go to [Usage](#usage)
 

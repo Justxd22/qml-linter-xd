@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-qml-linter-xd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Linter for QML files",
   "type": "module",
   "keywords": [
@@ -27,7 +27,7 @@
     "update:eslint-docs": "eslint-doc-generator"
   },
   "dependencies": {
-    "@oltodo/qml-parser": "^0.6.0",
+    "@justxd22/qml-parser": "^2.1.3",
     "requireindex": "^1.2.0"
   },
   "devDependencies": {
