@@ -14,20 +14,16 @@ Validation tool designed to enforce coding standards and best practices in QML f
 - **Report Generation**: Detailed reporting of linting issues, including the type of issue and the affected code.
 
 ## Installation
-You'll first need to install [ESLint](https://eslint.org/) in your project:
-
-```sh
-npm i eslint --save-dev
-```
 ### Use Plugin From NPM
 Install from npm
 ```sh
  npm i eslint-plugin-qml-linter-xd
 ```
+Use this flag to get download progress `--foreground-scripts`  
 Next go to [Usage](#usage)
 
 
-### Use PLugin From Source code
+### Or Use Plugin From Source code
 
 Clone the repository:
 
