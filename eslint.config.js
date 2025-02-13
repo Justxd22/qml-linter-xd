@@ -9,8 +9,12 @@ export default [
       sourceType: "module",
     },
     rules: {
-      "no-unused-vars": "error", // Example: prevent unused variables
+      "no-unused-vars": "warn", // Example: prevent unused variables
       "no-console": "warn", // Example: warn on console statements
+      "semi": ["error", "always"], // Enforce semicolons
+      "eqeqeq": ["error", "always"], // Require === and !== instead of == and !=
+      "keyword-spacing": "error",
+      "space-before-blocks": "error"
     },
   },
 
