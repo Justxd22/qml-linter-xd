@@ -11,4 +11,12 @@ Rectangle {
     Text {
         text: root.usedProperty
     }
+
+    Component.onCompleted: {
+        let x = 10;
+        let y = 0;
+        if (x === 10) {  // Should trigger warning
+            processData();
+        }
+    }
 }

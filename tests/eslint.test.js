@@ -103,7 +103,7 @@ describe('ESLint QML Plugin Integration', () => {
     
     const expectedErrorCases = {
       'unusedVar.qml': [
-        { ruleId: 'no-unused-vars', message: /unused/ }
+        { ruleId: 'no-unused-vars', message: /never/ }
       ],
       'JavaScriptBlock.qml': [
         { ruleId: 'eqeqeq', message: / '===' / },
