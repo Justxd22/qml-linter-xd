@@ -16,6 +16,7 @@ export default [
       "keyword-spacing": "error",
       "space-before-blocks": "error"
     },
+    processor: qml.processors["pragma-js"],
   },
 
   {
