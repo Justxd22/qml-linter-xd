@@ -49,11 +49,11 @@ Next go to [Usage](#usage)
 
 ## Usage
 - Install the plugin
-- In your [configuration file](https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file) `eslint.config.js`, import the plugin `eslint-plugin-qml-linter-xd` and add `qml.processors.qml` as a processor
+- In your [configuration file](https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file) `eslint.config.mjs`, import the plugin `eslint-plugin-qml-linter-xd` and add `qml.processors.qml` as a processor
 - Then configure js rules you want to use under the `rules` key.
 - Next go to [Run](#run)
 
-## or use this config in `eslint.config.js`
+## or use this config in `eslint.config.mjs`
 
 
 ```js
@@ -75,6 +75,7 @@ export default [
       "keyword-spacing": "error",
       "space-before-blocks": "error"
     },
+    processor: qml.processors["pragma-js"],
   },
 
   {
